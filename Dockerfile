@@ -15,4 +15,6 @@ rm -rf /build/vim
 COPY .vimrc /root/.vimrc
 COPY .tmux.conf /root/.tmux.conf
 
+ENV TERM=screen-256color
+
 ENTRYPOINT ["bash"]

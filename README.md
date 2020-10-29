@@ -2,17 +2,23 @@
 
 ![docker-vim mov](https://user-images.githubusercontent.com/4065733/97482945-7228fe80-191c-11eb-934d-754be6ad5178.gif)
 
-Docker image with vim and system requirements for popular plugins and tools:
+**The problem**: A full development enviroment requires global tools installed (node, fzf, ripgrep)
+but you can't install whatever you want in a **REMOTE SERVER**
 
-- python3
+**The goal** A containerized enviroment with all ingredients needed to get up and running. 
+
+Vim version: v8.2.1916
+
+System packages (recent):
+
 - git
 - node
 - yarn
 - ripgrep
 - fzf
 - tmux
+- python3
 
-Vim version: v8.2.1916
 
 # Requires
 
@@ -20,51 +26,38 @@ Vim version: v8.2.1916
 
 # How to use
 
-Build image:
+Clone, build and create a docker volume (so your changes to .vimrc aren't lost)
 
 ```
+git clone https://github.com/eduardoarandah/docker-vim && cd docker-vim
 docker build . -t docker-vim
-```
-
-Run it:
-
-This command opens the container and binds your current directory to /app
-
-```
-docker run --rm -it -v ${PWD}:/app -w /app docker-vim
-```
-
-On first run you need to install vim plugins with:
-
-```
-:PlugInstall
-```
-
-Then exit vim `:qa!` and open it again, press `F7` to see your files.
-
-# Persistency
-
-Docker is volatile, so all your changes will be lost when you close the container.
-
-To persist them, create a volume:
-
-```
 docker volume create docker-vim
 ```
 
-Then launch it again, this time, your changes will persist
+Go to the directory with your code and run vim. (it only mounts current directory)
 
-``` 
-docker run --rm -it -v ${PWD}:/app -w /app -v docker-vim:/root docker-vim 
+```
+docker run --rm -it -v ${PWD}:/app -w /app -v docker-vim:/root docker-vim
 ```
 
-You can delete the volume later with
+Open vim and install plugins
+
+```
+vim
+:PlugInstall
+```
+
+Quit vim and open it again. `:qa!`
+
+`F7` opens vim file explorer (nerdtree)
+
+You can delete your volume later with
 
 ```
 docker volume rm docker-vim 
 ```
 
-# This vim contains:
+# Contains
 
 Optimized defaults, utilities and common mappings, please customize with your own!
 
