@@ -16,7 +16,6 @@ System packages (recent):
 - yarn
 - ripgrep
 - fzf
-- tmux
 - python3
 
 
@@ -26,21 +25,20 @@ System packages (recent):
 
 # How to use
 
-Clone, build and create a docker volume (so your changes to .vimrc aren't lost)
+Create a volume and an alias. (you can put this alias in your `.bashrc`)
 
 ```
-git clone https://github.com/eduardoarandah/docker-vim && cd docker-vim
-docker build . -t docker-vim
 docker volume create docker-vim
+alias docker-vim='docker run --rm -it -v ${PWD}:/app -w /app -v docker-vim:/root eduardoarandah/docker-vim'
 ```
 
-Go to the directory with your code and run vim. (it only mounts current directory)
+Run in your desired directory (it only mounts current directory)
 
 ```
-docker run --rm -it -v ${PWD}:/app -w /app -v docker-vim:/root docker-vim
+docker-vim
 ```
 
-Open vim and install plugins
+On your first run, install plugins
 
 ```
 vim
@@ -51,7 +49,7 @@ Quit vim and open it again. `:qa!`
 
 `F7` opens vim file explorer (nerdtree)
 
-You can delete your volume later with
+Changes in your `.vimrc` are persisted in a volume. You can delete it with:
 
 ```
 docker volume rm docker-vim 
@@ -81,10 +79,11 @@ Plugins:
 - arthurxavierx/vim-caser
 - neoclide/coc.nvim
 
-# Tmux
+# Rebuild
 
-Tmux is vim best frend, so I added it.
+To rebuild this image:
 
-I added common defaults to `~/.tmux.conf`
-
-If characters display funny, check first line in that file.
+```
+git clone https://github.com/eduardoarandah/docker-vim && cd docker-vim
+docker build . -t docker-vim
+```
