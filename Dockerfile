@@ -1,6 +1,6 @@
 FROM alpine:3
 
-RUN apk --no-cache add git python3 nodejs npm fzf ripgrep alpine-sdk ncurses-dev && \ 
+RUN apk --no-cache add git python3 nodejs npm fzf ripgrep alpine-sdk ncurses-dev curl && \ 
 npm install --global yarn && \ 
 mkdir /build && \
 cd /build && \
